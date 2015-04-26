@@ -7,3 +7,5 @@ Usage:
 ruby infinimidi.rb MIDIFile #trackToLearn #orderOfFinDifferenceToLearn play
 
 if play is not given,skip playing the chosen track
+
+Pre-reqs: unimidi , midilib . Installl with gem
