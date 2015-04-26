@@ -3,7 +3,7 @@ Started for learning ruby.
 
 Sorry for the usability-will make it easier to use later.
 
-
 Usage:
-ruby infinimidi.rb <MIDIFile> #trackToLearn #orderOfFinDifferenceToLearn <play>
-if <play> is not given,skip playing the chosen track
+ruby infinimidi.rb MIDIFile #trackToLearn #orderOfFinDifferenceToLearn play
+
+if play is not given,skip playing the chosen track

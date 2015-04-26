@@ -2,7 +2,6 @@ require_relative "rand_util"
 require "unimidi"
 require "midilib"
 #TODO : get the length of each individual note without needing NoteOff events , play multiple tracks / notes in tracks
-#TODO : Make this more usable.
 
 
 
@@ -43,11 +42,14 @@ rand = Random::new()
 
  # C E G
 duration = 0.125
-#infinimidi.rb file.mid track markov_ord [play]
+#infinimidi.rb file.mid track markov_num [play]
 notegen = FiniteDifferenceMarkovChain.new((ARGV[2].nil? ? 1 : ARGV[2]).to_i,MidiDif)
 output = UniMIDI::Output.open(:first)
 town = seq = MIDI::Sequence.new()
-town.read(File.new(ARGV[0].nil? ? "ode.mid" : ARGV[0] ,"rb"))
+town.read(File.new(ARGV[0].nil? ? "ode.mid" : ARGV[0] ,"rb")) { | track, num_tracks, i |
+        # Print something when each track is read.
+        puts "read track #{i} of #{num_tracks}"
+}
 traNr = (ARGV[1].nil? ? 1 : ARGV[1]).to_i
 
 
@@ -63,11 +65,15 @@ if (not ARGV[3].nil?) then
 	}
 end
 
+
 notegen.add( (town.tracks[traNr].select { |ev| ev.is_a? MIDI::NoteEvent }).map { |ev| {0 => ev.data_as_bytes[1] , 1 => town.pulses_to_seconds(ev.delta_time).clamp(0,1)}} )
 note=notegen.gen()
 
 
 
+
+
+puts "Analysis/testing succeded.Playing that funky music."
 
 
 while true do
